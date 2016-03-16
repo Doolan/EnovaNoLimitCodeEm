@@ -1,3 +1,6 @@
+var math = require('math');
+var nums = require('nums');
+var combinations = require('combinations-js');
 
 var ROYALMULT = 1;
 var STAIGHTFLUSHMULT =.7;
@@ -11,7 +14,29 @@ var ONEPAIR = .1;
 var HighCard = 0;
 
 
+function factorial(op) {
+ // Lanczos Approximation of the Gamma Function
+ // As described in Numerical Recipes in C (2nd ed. Cambridge University Press, 1992)
+ var z = op + 1;
+ var p = [1.000000000190015, 76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 1.208650973866179E-3, -5.395239384953E-6];
 
+ var d1 = Math.sqrt(2 * Math.PI) / z;
+ var d2 = p[0];
+
+ for (var i = 1; i <= 6; ++i)
+  d2 += p[i] / (z + i);
+
+ var d3 = Math.pow((z + 5.5), (z + 0.5));
+ var d4 = Math.exp(-(z + 5.5));
+
+ d = d1 * d2 * d3 * d4;
+
+ return d;
+}
+
+var choose = function(x, y){
+	s
+}
 
 //return num needed cards or -1
 var findN = function(hand, communityCards, idealCards){
@@ -40,8 +65,19 @@ var calcOdds = function(n, numRemaining){
 		return 1;
 	}
 	var deckSize = 52-7+numRemaining;
-
+	var fct = factorial(n);
+	var chs = combinations(numRemaining, n);
+	
+	var szs = math.pow(deckSize,n);
+	var val = fct*chs;
+	var valfp = 0.0 + val + 0.0;
+	valfp = valfp / szs;
+	console.log(szs);
+	console.log(val);
+	return valfp;
 };
+
+console.log(calcOdds(3,5));
 
 
 var royalFlushOdds = function(hand, communityCards, numRenaming){
