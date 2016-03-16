@@ -79,3 +79,28 @@ var straightOdds = function(hand, communityCard, numRemaining){
 };
 
 ///four three two pair one pair
+var fourKind = function(hand, communityCards, numRemaining){
+    var odds;
+    var acceptableHands = [['AH','AD','AC','AS'],
+                            ['KH','KD','KC','KS'],
+                            ['QH','QD','QC','QS'],
+                            ['JH','JD','JC','JS'],
+                            ['TH','TD','TC','TS'],
+                            ['9H','9D','9C','9S'],
+                            ['8H','8D','8C','8S'],
+                            ['7H','7D','7C','7S'],
+                            ['6H','6D','6C','6S'],
+                            ['5H','5D','5C','5S'],
+                            ['4H','4D','4C','4S'],
+                            ['3H','3D','3C','3S'],
+                            ['2H','2D','2C','2S'],
+                            ['1H','1D','1C','1S']];
+    for (var i = 0; i<acceptableHands.length; i++) {
+		var n = findN(hand, communityCards, acceptableHands[i]);
+		if(i !== -1){
+			odds += calcOdds(n, numRenaming)
+        }
+    }
+    return odds*FOURKINDMULT;
+}
+
