@@ -67,6 +67,8 @@ var straightFlushOdds = function (hand, communityCard, numRemaining) {
 
 var fullHouseOdds = function(hand, communityCard, numRemaining){
 	//3 of a kind and two of a kind
+
+
 };
 
 
