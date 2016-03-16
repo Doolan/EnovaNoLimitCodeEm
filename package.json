@@ -1,0 +1,19 @@
+{
+  "name": "enova",
+  "version": "1.0.0",
+  "description": "",
+  "main": "helpers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Doolan/EnovaNoLimitCodeEm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Doolan/EnovaNoLimitCodeEm/issues"
+  },
+  "homepage": "https://github.com/Doolan/EnovaNoLimitCodeEm#readme"
+}
