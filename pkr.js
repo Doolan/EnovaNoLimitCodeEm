@@ -359,7 +359,7 @@ useData = function(data){
 
 	}
 	setTimeout(function(){getData(useData)}, 800);
-}
+};
 
 var betScale = 2.0;
 
@@ -374,7 +374,7 @@ getBetNumh = function(data){
 		}
 	}
 	return(0);
-}
+};
 
 getBetNum = function(data){
 	var arr = data.hand;
@@ -385,10 +385,11 @@ getBetNum = function(data){
 	for (var i = 0; i < arr.length; i++) {
 		for (var j = 0; j < arr.length; j++) {
 			var ndat = {hand: [arr[i], arr[j]]};
-			nval += getBetNumh(ndat);
+			nval = Math.max(nval, getBetNumh(ndat));
 		}
 	}
-}
+	return nval;
+};
 
 //setTimeout(continueExecution, 10000)
 
