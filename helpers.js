@@ -44,8 +44,8 @@ var calcOdds = function(n, numRemaining){
 };
 
 
-var royalFlushOdds = function(hand, communityCards, numRenaming){
-	var odds;
+var royalFlushOdds = function(hand, communityCards, numRemaining){
+	var odds =0;
 	var acceptableHands = [['AH','KH','QH','JH','TH'],
 							['AD','KD','QD','JD','TD'],
 							['AC','KC','QC','JC','TC'],
@@ -53,7 +53,7 @@ var royalFlushOdds = function(hand, communityCards, numRenaming){
 	for(var i = 0; i<acceptableHands.length; i++){
 		var n = findN(hand, communityCards, acceptableHands[i]);
 		if(i !== -1){
-			odds += calcOdds(n, numRenaming)
+			odds += calcOdds(n, numRemaining)
 		}
 	}
 	//props should return something if guaranteed
@@ -74,8 +74,38 @@ var flushOdds = function(hand, communityCard, numRemaining){
 	//five cards same suit
 };
 
-var straightOdds = function(hand, communityCard, numRemaining){
+var straightOdds = function(hand, communityCards, numRemaining){
 	//five cards same suit
+	var suits = ['H','D','C', 'S'];
+	var odds = 0;
+	for(var i =0; i < suits.length; i++){
+		var n = straightOddsN(hand, communityCards, suits[i]);
+		if(i !== -1){
+			odds += calcOdds(n, numRemaining)
+		}
+	}
+	return odds * STRAIGHTMULT;
+};
+
+
+var straightOddsN = function(hand, communityCards, suit){
+	var cardsOfSuit = [];
+	if(hand[0].charAt(1) === suit) {
+		cardsOfSuit.push(hand[0]);
+	}
+	if(hand[1].charAt(1) === suit){
+		cardsOfSuit.push(hand[1]);
+	}
+	//hand does not work with cards
+	if(cardsOfSuit.size == 0){
+		return -1;
+	}
+	for( var i = 0; i< communityCards.length; i++){
+		if(communityCards[i].charAt(1) === suit){
+			cardsOfSuit.push(communityCards[i]);
+		}
+	}
+	return 5 - cardsOfSuit.length;
 };
 
 ///four three two pair one pair
@@ -103,4 +133,3 @@ var fourKind = function(hand, communityCards, numRemaining){
     }
     return odds*FOURKINDMULT;
 }
-
