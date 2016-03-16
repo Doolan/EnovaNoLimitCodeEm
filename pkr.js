@@ -1,14 +1,66 @@
+//var sleep = require('sleep');
 var Stats = require('fast-stats').Stats;
-var express = require('express');
-var app = express();
+var http = require('http');
+var request = require("request");
 
-var args = process.argv.slice(2);
+var gurl = "https://enova-no-limit-code-em.herokuapp.com/sandbox/players/deal-phase-key";
+var purl = "https://enova-no-limit-code-em.herokuapp.com/sandbox/players/deal-phase-key";
 
-app.get('/', function (req, res) {
-  res.write(args[0]);
-  res.end();
-});
+getData = function (cb) {request({
+  uri: gurl,
+  method: "GET",
+  form: {
+  }
+}, function(error, response, body) {
+  //console.log(body);
+  cb(JSON.parse(body));
+});};
 
-app.listen(parseInt(args[1]), function () {
-  console.log('Example app listening on port ' + args[1] + '!');
-});
+//getData(console.log);
+
+bet = function (amt,cb) {request({
+  uri: purl,
+  method: "POST",
+  form: {
+  	action_name: 'bet',
+  	amount: amt
+  }
+}, function(error, response, body) {
+  //console.log(body);
+  cb(body);
+});};
+
+fold = function (cb) {request({
+  uri: purl,
+  method: "POST",
+  form: {
+  	action_name: 'fold',
+  	amount: 0
+  }
+}, function(error, response, body) {
+  //console.log(body);
+  cb(body);
+});};
+
+nop = function(){console.log('posted')}
+
+useData = function(data){
+	if(data.turn){
+		var btn = getBetNum(data);
+		if(btn >= 0){
+			bet(btn,nop);
+		}
+		else{
+			fold(nop);
+		}
+	}
+	setTimeout(function(){getData(useData)}, 800);
+}
+
+getBetNum(data){
+	//
+}
+
+//setTimeout(continueExecution, 10000)
+
+getData(useData);
